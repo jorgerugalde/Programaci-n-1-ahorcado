@@ -1,7 +1,6 @@
 package practicaahorcado;
-import java.io.PrintStream;
+import java.util.Random;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,71 +11,90 @@ public class Ahorcado {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args){
+    public Ahorcado(){
         // TODO code application logic here
-String palabras []=new String [10];
-        String palabras2[]=new String [10];
-        String palabraEscogida;
-        String palabraOculta[];
-        String letraElegida;
-        //palabras
-        palabras[0]="ALAJUELA".toUpperCase();
-        palabras[1]="HEREDIA".toUpperCase();
-        palabras[2]="limon".toUpperCase();
-        palabras[3]="cartago".toUpperCase();
-        palabras[4]="puntarenas".toUpperCase();
-        palabras[5]="guanacaste".toUpperCase();
-        palabras[6]="miami".toUpperCase();
-        palabras[7]="europa".toUpperCase();
-        palabras[8]="brasil".toUpperCase();
-        palabras[9]="españa".toUpperCase();
-        //
-        String linea, palabra=palabras[(int)(Math.random()* palabras.length)];
-        int i, n=palabra.length(), turnos=0, aciertos=0, oportunidades=6;
-        char letra, caracter;
-        char casillas[]=new char[n];
-        boolean encontrado;
-        for (i=0; i<n; i++) {
-            casillas[i]='_';
-        }
-        do {
-            System.out.println("Oportunidades restantes: "+(oportunidades=turnos));
-            for (i=0;i<n;i++)
-            {
-                System.out.println(""+casillas[i]);
+        Scanner scanner = new Scanner(System.in);
+        String [] listaPalabras = {"avion","barco","computadora","dinosaurio","elefante","foca","gato","hielo","iguana","jabon"};
+        
+        //Elegimos un numero random, que sera el numero de palabra que legiremos de la lista de palabras
+        int numeroRandom = 1 + new Random().nextInt(listaPalabras.length);
+        
+        String palabraEscogida = listaPalabras[numeroRandom];//Guardamos la palabra escogida por la pc en una variable
+        System.out.println("Esta palabra tiene "+palabraEscogida.length()+" letras");
+        String[] palabra = new String[palabraEscogida.length()];//si se llena todos los espacios de este array es que ha ganado el juego
+        imprimirPalabra(palabra);//Mostramos las rayitas
+        int vidas = 15;//Contador de vidas
+        
+        while(true) {
+            System.out.println("*************************************************");
+            System.out.println("Escoge una letra");
+            String letraElegidaPorUsuario = scanner.nextLine();
+            String[] letras = palabraEscogida.split("");
+            int contador = -1;
+            
+            boolean acertoAlguna = false;
+            //Recorremos cada letra de la palabra para comprobar si hay una igualdad
+            for (String letra : letras) {
+                if(letraElegidaPorUsuario.equals(letra)) {
+                    palabra[contador] = letraElegidaPorUsuario;
+                    acertoAlguna = true;
+                }
+                contador++;
             }
-            System.out.println("\nEscriba una letra: ");
-            do{
-                linea=(JOptionPane.showInputDialog(null, "Escriba una letra", "letra", JOptionPane.QUESTION_MESSAGE));
+            if(acertoAlguna) {
+                System.out.println("Has acertado una palabra");
+                System.out.println("Te quedan "+vidas+" vidas");
             }
-            while(linea.isEmpty());
-            letra=linea.charAt(0);
-            encontrado=false;
-            for(i=0;i<n;i++)
-            {
-                caracter=palabra.charAt(i);
-                if(Character.toUpperCase(letra)==Character.toUpperCase(caracter))
-                {
-                    encontrado=true;
-                    if (casillas[1]=='_')
-                    {
-                        casillas[1]=caracter;
-                        aciertos++;
-                    }
+            else{
+                vidas --;
+                System.out.println("No has acertado ninguna palabra");
+                if(vidas == 0) {
+                    System.out.println("Se te acabaron las vidas, quedas ahorcado x(");
+                    break;
+                }
+                else{
+                    System.out.println("Te quedan "+vidas+" vidas");
                 }
             }
-            if(!encontrado) {
-                turnos++;
-                System.out.println("Letra no encontrada");
+            System.out.println("Hasta el momento vas: ");
+            imprimirPalabra(palabra);
+            contador = 0;
+            acertoAlguna = false;
+            if (gano(palabra)){
+                System.out.println("Has completado la palabra");
+                break;
             }
         }
-        while(turnos<oportunidades && aciertos<n);
-        if (aciertos==n){
-            System.out.println("Felicidades, has ganado");
+    }
+    
+    public void imprimirPalabra(String[] palabra) {
+        //Este metodo imprime las letras que ha acertado el usuario hasta el momento.
+        for (String letra : palabra) {
+            if(letra != null) {
+                System.out.print(letra);
+            }
+            else{
+                System.out.print("-");
+            }
         }
-        else{
-            System.out.println("Has perdido y quedas colgado");
+        System.out.println("");
+    }
+    
+    public boolean gano(String[] palabra) {
+        boolean gano = true;
+        
+        for (String letra : palabra) {
+            if(letra == null) {
+                gano = false;
+                break;
+            }
         }
-        System.out.println("La palabra secreta era: " + palabra + "\n");
+        
+        return gano;
+    }
+    
+    public static void main(String[] args) {
+        //String[] asd = new String[10];
+        new Ahorcado();
     }
 }
