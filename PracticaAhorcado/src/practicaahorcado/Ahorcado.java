@@ -14,8 +14,19 @@ public class Ahorcado {
     public Ahorcado(){
         // TODO code application logic here
         Scanner scanner = new Scanner(System.in);
-        String [] listaPalabras = {"avion","barco","computadora","dinosaurio","elefante","foca","gato","hielo","iguana","jabon"};
-        
+        String [] listaPalabras = new String[10]; 
+        {
+            listaPalabras[0]="avion".toUpperCase();
+            listaPalabras[1]="barco".toUpperCase();
+            listaPalabras[2]="computadora".toUpperCase();
+            listaPalabras[3]="dinosaurio".toUpperCase();
+            listaPalabras[4]="elefante".toUpperCase();
+            listaPalabras[5]="foca".toUpperCase();
+            listaPalabras[6]="gato".toUpperCase();
+            listaPalabras[7]="hielo".toUpperCase();
+            listaPalabras[8]="iguana".toUpperCase();
+            listaPalabras[9]="jabon".toUpperCase();
+        }
         //Elegimos un numero random, que sera el numero de palabra que legiremos de la lista de palabras
         int numeroRandom = 1 + new Random().nextInt(listaPalabras.length);
         
@@ -28,7 +39,7 @@ public class Ahorcado {
         while(true) {
             System.out.println("*************************************************");
             System.out.println("Escoge una letra");
-            String letraElegidaPorUsuario = scanner.nextLine();
+            String letraElegidaPorUsuario = scanner.nextLine().toUpperCase();
             String[] letras = palabraEscogida.split("");
             int contador = -1;
             
