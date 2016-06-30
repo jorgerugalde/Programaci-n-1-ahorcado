@@ -11,13 +11,18 @@ public class Ahorcado {
      * @param args the command line arguments
      */
     public Ahorcado(){
-        // TODO code application logic here
+        //Se pregunta por la categoría a jugar
         String op = JOptionPane.showInputDialog(null, "1.-Ingeniería\n" + "2.-Frutas\n");
         int opciones = Integer.parseInt(op);
+        //switch de las opciones de las categorías
         switch(opciones){
+            //categoría 1 
             case 1:
+                //Se imprime la categoría escogida por el usuario
               System.out.println("Escogió la categoría de Ingenieria");
-         Scanner scanner = new Scanner(System.in);         
+              //se inicializa la variable escaner
+         Scanner scanner = new Scanner(System.in);
+         //arreglo de palabras de la categoría de ingeniería
         String [] listaPalabras = new String[10]; {
             listaPalabras[0]="Computadora".toUpperCase();
             listaPalabras[1]="Ingeniero".toUpperCase();
@@ -37,14 +42,14 @@ public class Ahorcado {
         String[] palabra = new String[palabraEscogida.length()];//si se llena todos los espacios de este array es que ha ganado el juego
         imprimirPalabra(palabra);//Mostramos las rayitas
         int vidas = 11;//Contador de vidas
-        //
+        //Se ingresa la letra
         while(true) {
             System.out.println("*************************************************");
             System.out.println("Escoge una letra");
             String letraElegidaPorUsuario = scanner.nextLine().toUpperCase();
             String[] letras = palabraEscogida.split("");
             int contador = -1;
- 
+            //bucle de verificación de la letra
             boolean acertoAlguna = false;
             //Recorremos cada letra de la palabra para comprobar si hay una igualdad
             for (String letra : letras) {
@@ -69,12 +74,14 @@ public class Ahorcado {
                     System.out.println("Te quedan "+vidas+" vidas");
                 }
             }
+            //se imprime el avance del jugador
             System.out.println("Hasta el momento vas: ");
             imprimirPalabra(palabra);
             contador = 0;
             acertoAlguna = false;
+            //Caso de acierto
             if (gano(palabra)){
-                JOptionPane.showMessageDialog(null,"GANO!!!");
+                JOptionPane.showMessageDialog(null,"Has completado la palabra: " + palabraEscogida);
                 System.out.println("Has completado la palabra");
                 break;
             }
@@ -82,8 +89,11 @@ public class Ahorcado {
             break;
           //caso 2
             case 2:
+                //Se imprime la categoría escogida por el usuario
                 System.out.println("Escogió la categoría de FRUTAS");
-                Scanner scanner2 = new Scanner(System.in);         
+                //se inicializa la variable escaner
+                Scanner scanner2 = new Scanner(System.in);
+                //arreglo de palabras de la categoría de frutas
         String [] listaPalabras2 = new String[10]; {
             listaPalabras2[0]="Manzana".toUpperCase();
             listaPalabras2[1]="Piña".toUpperCase();
@@ -97,20 +107,19 @@ public class Ahorcado {
             listaPalabras2[9]="Kiwi".toUpperCase();}
         //Elegimos un numero random, que sera el numero de palabra que legiremos de la lista de palabras
         int numeroRandom2 = 1 + new Random().nextInt(listaPalabras2.length);
-        //
         String palabraEscogida2 = listaPalabras2[numeroRandom2];//Guardamos la palabra escogida por la pc en una variable
         System.out.println("Esta palabra tiene "+palabraEscogida2.length()+" letras");
         String[] palabra2 = new String[palabraEscogida2.length()];//si se llena todos los espacios de este array es que ha ganado el juego
         imprimirPalabra(palabra2);//Mostramos las rayitas
         int vidas2 = 11;//Contador de vidas
-        //
+        //Se Ingresa la letra
         while(true) {
             System.out.println("*************************************************");
             System.out.println("Escoge una letra");
             String letraElegidaPorUsuario = scanner2.nextLine().toUpperCase();
             String[] letras = palabraEscogida2.split("");
             int contador = -1;
- 
+            //se verifica si se acertó alguna letra
             boolean acertoAlguna = false;
             //Recorremos cada letra de la palabra para comprobar si hay una igualdad
             for (String letra : letras) {
@@ -120,10 +129,12 @@ public class Ahorcado {
                 }
                 contador++;
             }
+            //si acertó alguna letra
             if(acertoAlguna) {
                 System.out.println("Has acertado una palabra");
                 System.out.println("Te quedan "+vidas2+" vidas");
             }
+            //Si no se acertó
             else{
                 vidas2 --;
                 System.out.println("No has acertado ninguna palabra");
@@ -140,7 +151,7 @@ public class Ahorcado {
             contador = 0;
             acertoAlguna = false;
             if (gano(palabra2)){
-                JOptionPane.showMessageDialog(null,"GANO!!!");
+                JOptionPane.showMessageDialog(null,"Has completado la palabra: " + palabraEscogida2);
                 System.out.println("Has completado la palabra");
                 break;
              }
@@ -148,7 +159,7 @@ public class Ahorcado {
             break;
         }
     }
-    //
+    //metodo que imprime la palabra
     public void imprimirPalabra(String[] palabra) {
         //Este metodo imprime las letras que ha acertado el usuario hasta el momento.
         for (String letra : palabra) {
@@ -161,7 +172,7 @@ public class Ahorcado {
         }
         System.out.println("");
     }
-    //
+    //metodo boolean que verifica si ganó
     public boolean gano(String[] palabra) {
         boolean gano = true;
         
@@ -173,11 +184,9 @@ public class Ahorcado {
         }
         return gano;
     }
-
-    //
+    //main
     public static void main(String[] args) {
         //String[] asd = new String[10];
         new Ahorcado();
     }
-
 }
